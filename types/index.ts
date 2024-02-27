@@ -3,7 +3,7 @@ export type Property = {
   owner: string;
   name: string;
   type: string;
-  description: string;
+  description?: string;
   location: Location;
   beds: number;
   baths: number;
@@ -11,27 +11,42 @@ export type Property = {
   amenities: string[];
   rates: Rates;
   seller_info: SellerInfo;
-  images: string[];
-  is_featured: boolean;
+  images?: string[];
+  is_featured?: boolean;
   createdAt: string;
   updatedAt: string;
 };
 
 export type Location = {
-  street: string;
-  city: string;
-  state: string;
-  zipcode: string;
+  street?: string;
+  city?: string;
+  state?: string;
+  zipcode?: string;
 };
 
 export type Rates = {
-  weekly: number;
+  weekly?: number;
   monthly?: number;
   nightly?: number;
 };
 
 export type SellerInfo = {
-  name: string;
-  email: string;
-  phone: string;
+  name?: string;
+  email?: string;
+  phone?: string;
 };
+
+export type User = {
+  email: string;
+  username: string;
+  image: string;
+  bookmarks: string[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type FinalType<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
+export type Override<
+  T,
+  U extends Partial<Record<keyof T, unknown>>
+> = FinalType<Omit<T, keyof U> & U>;
