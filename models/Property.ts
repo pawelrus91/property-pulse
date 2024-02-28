@@ -99,6 +99,7 @@ const propertySchema = new Schema<PropertySchema>(
   }
 );
 
-const PropertyModel = models.Property || model("Property", propertySchema);
+const PropertyModel =
+  models.Property || model<PropertySchema>("Property", propertySchema);
 
 export default PropertyModel;

@@ -1,10 +1,19 @@
 import connectDB from "@/config/database";
+import Property from "@/models/Property";
+import { Property as TProperty } from "@/types";
 
+/**
+ * @route GET /api/properties
+ */
 export async function GET(request: Request) {
   try {
     await connectDB();
 
-    return new Response(JSON.stringify({ message: "Hello World" }), {
+    const properties = await Property.find<TProperty>({}).sort({
+      createdAt: "desc",
+    });
+
+    return new Response(JSON.stringify(properties), {
       status: 200,
     });
   } catch (error) {
