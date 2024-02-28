@@ -22,4 +22,24 @@ async function fetchProperties() {
   }
 }
 
-export { fetchProperties };
+async function fetchProperty(id: Property["_id"]) {
+  try {
+    // Handle the case where the API domain is not available yet
+    if (!apiDomain) {
+      null;
+    }
+
+    const response = await fetch(`${apiDomain}/properties/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    return response.json() as Promise<Property>;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+
+export { fetchProperties, fetchProperty };
