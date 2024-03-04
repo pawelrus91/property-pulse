@@ -36,7 +36,7 @@ export default function PropertyPage() {
 
   if (!property && !loading) {
     return (
-      <h1 className="text-center text-2xl font-bold">Property Not Found </h1>
+      <h1 className="text-center text-2xl font-bold">Property Not Found</h1>
     );
   }
 
