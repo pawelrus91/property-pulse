@@ -481,7 +481,7 @@ export default function PropertyAddForm() {
                 id="weekly_rate"
                 name="rates.weekly"
                 className="border rounded w-full py-2 px-3"
-                checked={Boolean(fields.rates.weekly)}
+                value={fields.rates.weekly}
                 onChange={handleChange}
               />
             </div>
@@ -494,7 +494,7 @@ export default function PropertyAddForm() {
                 id="monthly_rate"
                 name="rates.monthly"
                 className="border rounded w-full py-2 px-3"
-                checked={Boolean(fields.rates.monthly)}
+                value={fields.rates.monthly}
                 onChange={handleChange}
               />
             </div>
@@ -507,7 +507,7 @@ export default function PropertyAddForm() {
                 id="nightly_rate"
                 name="rates.nightly"
                 className="border rounded w-full py-2 px-3"
-                checked={Boolean(fields.rates.nightly)}
+                value={fields.rates.nightly}
                 onChange={handleChange}
               />
             </div>
@@ -524,7 +524,7 @@ export default function PropertyAddForm() {
           <input
             type="text"
             id="seller_name"
-            name="seller_info.name."
+            name="seller_info.name"
             className="border rounded w-full py-2 px-3"
             placeholder="Name"
             value={fields.seller_info.name}
@@ -582,6 +582,7 @@ export default function PropertyAddForm() {
             accept="image/*"
             multiple
             onChange={handleImageChange}
+            required
           />
         </div>
 
