@@ -13,7 +13,14 @@ export default function PropertyHeaderImage({
       <div className="container-xl m-auto">
         <div className="grid grid-cols-1">
           <Image
-            src={`/images/properties/${image}`}
+            src={
+              // @ts-ignore
+              image?.startsWith("http")
+                ? // @ts-ignore
+                  (image as string)
+                : // @ts-ignore
+                  `/images/properties/${image}`
+            }
             alt=""
             className="object-cover h-[400px] w-full"
             width="0"

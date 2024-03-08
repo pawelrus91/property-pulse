@@ -6,8 +6,9 @@ import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
 import { fetchProperty } from "@/utils/requests";
 import { Property } from "@/types";
-import PropertyHeaderImage from "@/components/PropertyHeaderImage";
 import PropertyDetails from "@/components/PropertyDetails";
+import PropertyHeaderImage from "@/components/PropertyHeaderImage";
+import PropertyImages from "@/components/PropertyImages";
 import Spinner from "@/components/Spinner";
 
 export default function PropertyPage() {
@@ -148,6 +149,7 @@ export default function PropertyPage() {
               </div>
             </div>
           </section>
+          <PropertyImages images={property.images} />
         </>
       )}
     </>

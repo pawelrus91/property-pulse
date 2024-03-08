@@ -579,7 +579,7 @@ export default function PropertyAddForm() {
             id="images"
             name="images"
             className="border rounded w-full py-2 px-3"
-            accept="image/*"
+            accept="image/png"
             multiple
             onChange={handleImageChange}
             required

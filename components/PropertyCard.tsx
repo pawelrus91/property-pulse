@@ -29,7 +29,14 @@ export default function PropertyCard({ property }: PropertyCardProps) {
   return (
     <div className="rounded-xl shadow-md relative">
       <Image
-        src={`/images/properties/${property.images[0]}`}
+        src={
+          // @ts-ignore
+          property.images[0]?.startsWith("http")
+            ? // @ts-ignore
+              (property.images[0] as string)
+            : // @ts-ignore
+              `/images/properties/${property.images[0]}`
+        }
         alt=""
         height={0}
         width={0}
