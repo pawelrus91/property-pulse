@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "react-toastify";
 import { useSession } from "next-auth/react";
 import profileDefault from "@/assets/images/profile.png";
 import Spinner from "@/components/Spinner";
@@ -45,7 +46,33 @@ export default function ProfilePage() {
     // @ts-ignore
   }, [session?.user?.id]);
 
-  const handleDeleteProperty = async (propertyId: Property["_id"]) => {};
+  const handleDeleteProperty = async (propertyId: Property["_id"]) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this property?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`/api/properties/${propertyId}`, {
+        method: "DELETE",
+      });
+
+      if (response.status === 200) {
+        const updatedProperties = properties.filter(
+          (property) => property._id !== propertyId
+        );
+        setProperties(updatedProperties);
+
+        toast.success("Property Deleted");
+      } else {
+        toast.error("Failed to delete property");
+      }
+    } catch (error) {
+      console.error("Error deleting property: " + error);
+      toast.error("Failed to delete property");
+    }
+  };
 
   return (
     <section className="bg-blue-50">
@@ -109,6 +136,7 @@ export default function ProfilePage() {
                         Edit
                       </Link>
                       <button
+                        onClick={() => handleDeleteProperty(property._id)}
                         className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600"
                         type="button"
                       >
