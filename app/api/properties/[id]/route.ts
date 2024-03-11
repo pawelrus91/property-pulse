@@ -3,7 +3,6 @@ import Property from "@/models/Property";
 import mongoose from "mongoose";
 import { Property as TProperty } from "@/types";
 import { getSessionUser } from "@/utils/getSessionUser";
-import cloudinary from "@/config/cloudinary";
 import type { NextRequest } from "next/server";
 
 type BaseParam = {
