@@ -1,3 +1,14 @@
+export type PropertyType =
+  | "All"
+  | "Apartment"
+  | "Studio"
+  | "Condo"
+  | "House"
+  | "Cabin Or Cottage"
+  | "Loft"
+  | "Room"
+  | "Other";
+
 export type Property = {
   _id: string;
   owner: string;
