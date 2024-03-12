@@ -25,6 +25,7 @@ export default function PropertyMap({ property }: PropertyMapProps) {
     height: "500px",
   });
   const [loading, setLoading] = useState(true);
+  const [geocodeError, setGeocodeError] = useState(false);
 
   setDefaults({
     key: process.env.NEXT_PUBLIC_GOOGLE_GEOCODING_API_KEY as string,
@@ -39,12 +40,21 @@ export default function PropertyMap({ property }: PropertyMapProps) {
       try {
         const response = await fromAddress(address);
 
+        // Check for results
+        if (response.results.length === 0) {
+          // No result found
+          setGeocodeError(true);
+          setLoading(false);
+          return;
+        }
+
         const { lat, lng } = response.results[0].geometry.location;
         setLat(lat);
         setLng(lng);
         setViewport((prev) => ({ ...prev, latitude: lat, longitude: lng }));
       } catch (error) {
         console.error("Error fetching coordinates: " + error);
+        setGeocodeError(true);
       } finally {
         setLoading(false);
       }
@@ -60,6 +70,11 @@ export default function PropertyMap({ property }: PropertyMapProps) {
 
   if (loading) {
     return <Spinner loading={loading} />;
+  }
+
+  // Handle case when geocoding failed
+  if (geocodeError) {
+    return <div className="text-xl">No location data found</div>;
   }
 
   return (
