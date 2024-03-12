@@ -12,7 +12,7 @@ export const getSessionUser = async () => {
     return {
       user: session.user,
       // @ts-ignore
-      userId: session.user.id,
+      userId: session.user.id as string | undefined | null,
     };
   } catch (error) {
     console.error(error);
