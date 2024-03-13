@@ -56,6 +56,20 @@ export type User = {
   updatedAt: string;
 };
 
+export type Message = {
+  _id: string;
+  sender: string;
+  recipient: string;
+  property: string;
+  name: string;
+  email: string;
+  phone?: string;
+  body?: string;
+  read: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
 export type FinalType<T> = T extends infer U ? { [K in keyof U]: U[K] } : never;
 export type Override<
   T,
