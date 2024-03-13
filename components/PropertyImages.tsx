@@ -12,7 +12,14 @@ export default function PropertyImages({ images }: PropertyImagesProps) {
       <div className="container mx-auto">
         {images?.length === 1 ? (
           <Image
-            src={images[0]}
+            src={
+              // @ts-ignore
+              images[0]?.startsWith("http")
+                ? // @ts-ignore
+                  images[0]
+                : // @ts-ignore
+                  `/images/properties/${image[0]}`
+            }
             alt=""
             className="object-cover h-[400px] mx-auto rounded-xl"
             width={1800}
@@ -31,7 +38,11 @@ export default function PropertyImages({ images }: PropertyImagesProps) {
               >
                 <Image
                   key={index}
-                  src={image}
+                  src={
+                    image?.startsWith("http")
+                      ? image
+                      : `/images/properties/${image}`
+                  }
                   alt="object-cover h-[400px] w-full rounded-xl"
                   width={0}
                   height={0}
