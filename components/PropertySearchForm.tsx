@@ -4,6 +4,22 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PropertyType } from "@/types";
 
+const PROPERTY_TYPES: string[] = [
+  "All",
+  "Apartment",
+  "Studio",
+  "Condo",
+  "House",
+  "Cabin Or Cottage",
+  "Loft",
+  "Room",
+  "Other",
+] satisfies PropertyType[];
+
+const isPropertyType = (value: string): value is PropertyType => {
+  return PROPERTY_TYPES.includes(value);
+};
+
 export default function PropertySearchForm() {
   const [location, setLocation] = useState("");
   const [propertyType, setPropertyType] = useState<PropertyType>("All");
@@ -19,6 +35,14 @@ export default function PropertySearchForm() {
       const query = `?location=${location}&propertyType=${propertyType}`;
 
       router.push(`/properties/search-results${query}`);
+    }
+  };
+
+  const handlePropertyTypeChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    if (isPropertyType(e.target.value)) {
+      setPropertyType(e.target.value);
     }
   };
 
@@ -48,6 +72,7 @@ export default function PropertySearchForm() {
           id="property-type"
           className="w-full px-4 py-3 rounded-lg bg-white text-gray-800 focus:outline-none focus:ring focus:ring-blue-500"
           value={propertyType}
+          onChange={handlePropertyTypeChange}
         >
           <option value="All">All</option>
           <option value="Apartment">Apartment</option>
