@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import clsx from "clsx";
 import { toast } from "react-toastify";
 import { Message as TMessage, Override, Property, User } from "@/types";
+import { useGlobalContext } from "@/context/GlobalContext";
 
 type MessageProps = {
   message: Override<
@@ -19,6 +20,8 @@ export default function Message({ message }: MessageProps) {
   const [isRead, setIsRead] = useState(message.read);
   const [isDeleted, setIsDeleted] = useState(false);
 
+  const { setUnreadCount } = useGlobalContext();
+
   useEffect(() => {});
 
   const handleReadClick = async () => {
@@ -30,6 +33,7 @@ export default function Message({ message }: MessageProps) {
       if (response.status === 200) {
         const { read } = await response.json();
         setIsRead(read);
+        setUnreadCount((prevCount) => (read ? prevCount - 1 : prevCount + 1));
         if (read) {
           toast.success("Marked as read");
         } else {
@@ -50,6 +54,7 @@ export default function Message({ message }: MessageProps) {
 
       if (response.status === 200) {
         setIsDeleted(true);
+        setUnreadCount((prevCount) => prevCount - 1);
         toast.success("Message deleted");
       }
     } catch (error) {
