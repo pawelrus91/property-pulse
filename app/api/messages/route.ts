@@ -7,7 +7,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request: NextRequest) {
   try {
-    connectDB();
+    await connectDB();
 
     const sessionUser = await getSessionUser();
 
@@ -44,7 +44,7 @@ export async function GET(request: NextRequest) {
  */
 export async function POST(request: NextRequest) {
   try {
-    connectDB();
+    await connectDB();
 
     const { name, email, phone, body, property, recipient } =
       await request.json();
