@@ -12,11 +12,30 @@ export async function GET(request: NextRequest) {
   try {
     await connectDB();
 
-    const properties = await Property.find<TProperty>({}).sort({
-      createdAt: "desc",
-    });
+    const page = request.nextUrl.searchParams.has("page")
+      ? parseInt(request.nextUrl.searchParams.get("page") as string)
+      : 1;
+    // const page = request.nextUrl.searchParams.get("page") || 1;
+    const pageSize = request.nextUrl.searchParams.has("page")
+      ? parseInt(request.nextUrl.searchParams.get("pageSize") as string)
+      : 3;
 
-    return new Response(JSON.stringify(properties), {
+    const skip = (page - 1) * pageSize;
+
+    const total = await Property.countDocuments();
+    const properties = await Property.find<TProperty>({})
+      .sort({
+        createdAt: "desc",
+      })
+      .skip(skip)
+      .limit(pageSize);
+
+    const result = {
+      total,
+      properties,
+    };
+
+    return new Response(JSON.stringify(result), {
       status: 200,
     });
   } catch (error) {

@@ -6,7 +6,7 @@ async function fetchProperties() {
   try {
     // Handle the case where the API domain is not available yet
     if (!apiDomain) {
-      return [];
+      return { total: 0, properties: [] as Property[] };
     }
 
     const response = await fetch(`${apiDomain}/properties`, {
@@ -17,10 +17,13 @@ async function fetchProperties() {
       throw new Error("Failed to fetch data");
     }
 
-    return response.json() as Promise<Property[]>;
+    return response.json() as Promise<{
+      total: number;
+      properties: Property[];
+    }>;
   } catch (error) {
     console.error(error);
-    return [];
+    return { total: 0, properties: [] as Property[] };
   }
 }
 

@@ -18,7 +18,7 @@ export default function Properties() {
         }
 
         const data = await response.json();
-        setProperties(data);
+        setProperties(data.properties);
       } catch (error) {
         console.error(error);
       } finally {
