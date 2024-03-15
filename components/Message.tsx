@@ -17,10 +17,11 @@ type MessageProps = {
 
 export default function Message({ message }: MessageProps) {
   const [isRead, setIsRead] = useState(message.read);
+  const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {});
 
-  const handleRedClick = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleReadClick = async () => {
     try {
       const response = await fetch(`/api/messages/${message._id}`, {
         method: "PUT",
@@ -40,6 +41,26 @@ export default function Message({ message }: MessageProps) {
       toast.error("Something went wrong");
     }
   };
+
+  const handleDeleteClick = async () => {
+    try {
+      const response = await fetch(`/api/messages/${message._id}`, {
+        method: "DELETE",
+      });
+
+      if (response.status === 200) {
+        setIsDeleted(true);
+        toast.success("Message deleted");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Message was not deleted");
+    }
+  };
+
+  if (isDeleted) {
+    return null;
+  }
 
   return (
     <div className="relative bg-white p-4 rounded-md shadow-md border border-gray-200">
@@ -77,7 +98,7 @@ export default function Message({ message }: MessageProps) {
         </li>
       </ul>
       <button
-        onClick={handleRedClick}
+        onClick={handleReadClick}
         className={clsx(
           "mt-4 mr-3  py-1 px-3 rounded-md",
           isRead ? "bg-gray-300" : "bg-blue-500 text-white"
@@ -85,7 +106,10 @@ export default function Message({ message }: MessageProps) {
       >
         {isRead ? "Mark as New" : "Mark as Read"}
       </button>
-      <button className="mt-4 bg-red-500 text-white py-1 px-3 rounded-md">
+      <button
+        onClick={handleDeleteClick}
+        className="mt-4 bg-red-500 text-white py-1 px-3 rounded-md"
+      >
         Delete
       </button>
     </div>
